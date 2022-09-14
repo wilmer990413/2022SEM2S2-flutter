@@ -1,6 +1,7 @@
 import 'package:function_tree/function_tree.dart';
 import 'package:calculadora/models/boton.model.dart';
 import 'package:calculadora/widgets/botonesEnFila.widget.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<num> captura = [];
+  List<String> captura = [];
   String resultadosTexto = "";
   @override
   Widget build(BuildContext context) {
@@ -52,34 +53,43 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   botonesEnFila([
                     BotonModel(
+                        titulo: "(",
+                        metodo: () {
+                          setState(() {
+                            resultadosTexto += "(";
+                          });
+                          print(resultadosTexto);
+                        }),
+                    BotonModel(
+                        titulo: ")",
+                        metodo: () {
+                          setState(() {
+                            resultadosTexto += ")";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: "C",
+                        metodo: () {
+                          setState(() {
+                            resultadosTexto = "";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: "DEL",
+                        metodo: () {
+                          setState(() {
+                            final pos = resultadosTexto.length - 1;
+                            resultadosTexto = resultadosTexto.substring(0,pos);
+                          });
+                        }),
+                  ]),
+                  botonesEnFila([
+                    BotonModel(
                         titulo: "%",
                         metodo: () {
                           setState(() {
                             resultadosTexto += "%";
                           });
-                          print(resultadosTexto);
-                        }),
-                    BotonModel(
-                        titulo: "CE",
-                        metodo: () {
-                          print("CE");
-                        }),
-                    BotonModel(
-                        titulo: "C",
-                        metodo: () {
-                          print("C");
-                        }),
-                    BotonModel(
-                        titulo: "DEL",
-                        metodo: () {
-                          print("DEL");
-                        }),
-                  ]),
-                  botonesEnFila([
-                    BotonModel(
-                        titulo: "1/x",
-                        metodo: () {
-                          print("1/x");
                         }),
                     BotonModel(
                         titulo: "x^2",
@@ -89,6 +99,9 @@ class _HomePageState extends State<HomePage> {
                     BotonModel(
                         titulo: "√x",
                         metodo: () {
+                          setState(() {
+                            resultadosTexto += "√(";
+                          });
                           print("√x");
                         }),
                     BotonModel(
@@ -126,10 +139,10 @@ class _HomePageState extends State<HomePage> {
                           print("9");
                         }),
                     BotonModel(
-                        titulo: "X",
+                        titulo: "x",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "X";
+                            resultadosTexto += "x";
                           });
                           print("X");
                         }),
@@ -227,8 +240,15 @@ class _HomePageState extends State<HomePage> {
                     BotonModel(
                         titulo: "=",
                         metodo: () {
-                          captura.add(resultadosTexto.interpret());
-                          print(captura);
+                          setState(() {
+                            String resultado = resultadosTexto.replaceAll("x", "*").replaceAll("√", "sqrt");
+                            Parser p = Parser();
+                            Expression exp = p.parse(resultado);
+                            ContextModel cm = ContextModel();
+                            double eval = exp.evaluate(EvaluationType.REAL, cm);
+                            resultado = eval.toString();
+                            captura.add(resultado);
+                          });
                         }),
                   ]),
                 ],
