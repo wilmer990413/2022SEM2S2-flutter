@@ -40,18 +40,21 @@ class _HomePageState extends State<HomePage> {
                       Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(20),
-                            alignment: Alignment.center,
-                            child: historial(capturareverse)
-                            ),
+                              padding: const EdgeInsets.all(20),
+                              alignment: Alignment.center,
+                              child: historial(capturareverse)),
                         ],
                       ),
                       Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(20),
-                            alignment: Alignment.centerRight,
-                            child: Text(operacionCompleta,style: TextStyle(fontSize: 18),)),
+                              padding: const EdgeInsets.all(20),
+                              alignment: Alignment.center,
+                              child: Text(
+                                operacionCompleta,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              )),
                         ],
                       )
                     ],
@@ -68,8 +71,30 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Column(
                     children: [
-                      Text(numero),
-                      Text(error),
+                      Column(
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.all(5),
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                numero,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              )),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.all(5),
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                error,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              )),
+                        ],
+                      )
                     ],
                   ),
                 ],
@@ -88,21 +113,21 @@ class _HomePageState extends State<HomePage> {
                         titulo: "7",
                         metodo: () {
                           setState(() {
-                            numero+= "7";
+                            numero += "7";
                           });
                         }),
                     BotonModel(
                         titulo: "8",
                         metodo: () {
                           setState(() {
-                            numero+= "8";
+                            numero += "8";
                           });
                         }),
                     BotonModel(
                         titulo: "9",
                         metodo: () {
                           setState(() {
-                            numero+= "9";
+                            numero += "9";
                           });
                         }),
                     BotonModel(
@@ -110,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "/";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -122,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             final pos = numero.length - 1;
-                            numero = numero.substring(0,pos);
+                            numero = numero.substring(0, pos);
                           });
                         }),
                     BotonModel(
@@ -140,21 +165,21 @@ class _HomePageState extends State<HomePage> {
                         titulo: "4",
                         metodo: () {
                           setState(() {
-                            numero+= "4";
+                            numero += "4";
                           });
                         }),
                     BotonModel(
                         titulo: "5",
                         metodo: () {
                           setState(() {
-                            numero+= "5";
+                            numero += "5";
                           });
                         }),
                     BotonModel(
                         titulo: "6",
                         metodo: () {
                           setState(() {
-                            numero+= "6";
+                            numero += "6";
                           });
                         }),
                     BotonModel(
@@ -162,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "x";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -174,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "(";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -186,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = ")";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -199,21 +224,21 @@ class _HomePageState extends State<HomePage> {
                         titulo: "1",
                         metodo: () {
                           setState(() {
-                            numero+= "1";
+                            numero += "1";
                           });
                         }),
                     BotonModel(
                         titulo: "2",
                         metodo: () {
                           setState(() {
-                            numero+= "2";
+                            numero += "2";
                           });
                         }),
                     BotonModel(
                         titulo: "3",
                         metodo: () {
                           setState(() {
-                            numero+= "3";
+                            numero += "3";
                           });
                         }),
                     BotonModel(
@@ -221,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "-";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -233,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "2^(";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -245,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "√(";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -258,18 +283,18 @@ class _HomePageState extends State<HomePage> {
                         titulo: "0",
                         metodo: () {
                           setState(() {
-                            numero+= "0";
+                            numero += "0";
                           });
                         }),
                     BotonModel(
                         titulo: "%",
                         metodo: () {
                           setState(() {
-                            if(numero!=""){
-                              double porcentaje = double.parse(numero)/100;
+                            if (numero != "") {
+                              double porcentaje = double.parse(numero) / 100;
                               numero = porcentaje.toString();
                               operacionCompleta += numero;
-                              numero="";
+                              numero = "";
                             }
                           });
                         }),
@@ -278,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = ",";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -290,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             operacion = "+";
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
                             operacionCompleta += operacion;
@@ -301,10 +326,12 @@ class _HomePageState extends State<HomePage> {
                         titulo: "=",
                         metodo: () {
                           setState(() {
-                            if(numero!=""){
+                            if (numero != "") {
                               operacionCompleta += numero;
                             }
-                            String resultado = operacionCompleta.replaceAll("x", "*").replaceAll("√", "sqrt");
+                            String resultado = operacionCompleta
+                                .replaceAll("x", "*")
+                                .replaceAll("√", "sqrt");
                             Parser p = Parser();
                             Expression exp = p.parse(resultado);
                             ContextModel cm = ContextModel();
@@ -313,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                             operacionCompleta += "=" + resultado;
                             captura.add(operacionCompleta);
                             capturareverse = captura.reversed.toList();
-                            operacionCompleta="";
+                            operacionCompleta = "";
                             numero = "";
                             operacion = "";
                           });
