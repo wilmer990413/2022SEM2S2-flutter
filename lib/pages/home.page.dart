@@ -1,3 +1,4 @@
+import 'package:calculadora/widgets/historial.widget.dart';
 import 'package:function_tree/function_tree.dart';
 import 'package:calculadora/models/boton.model.dart';
 import 'package:calculadora/widgets/botonesEnFila.widget.dart';
@@ -13,7 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> captura = [];
-  String resultadosTexto = "";
+  List<String> capturareverse = [];
+  String numero = "";
+  String operacion = "";
+  String resultado = "";
+  String operacionCompleta = "";
+  String error = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +32,30 @@ class _HomePageState extends State<HomePage> {
             flex: 3,
             child: Container(
               color: Colors.black12,
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  Text("${captura}"),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            alignment: Alignment.center,
+                            child: historial(capturareverse)
+                            ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            alignment: Alignment.centerRight,
+                            child: Text(operacionCompleta,style: TextStyle(fontSize: 18),)),
+                        ],
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -39,7 +66,12 @@ class _HomePageState extends State<HomePage> {
               color: Colors.blueGrey,
               child: Row(
                 children: [
-                  Text(resultadosTexto),
+                  Column(
+                    children: [
+                      Text(numero),
+                      Text(error),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -53,98 +85,54 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   botonesEnFila([
                     BotonModel(
-                        titulo: "(",
+                        titulo: "7",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "(";
-                          });
-                          print(resultadosTexto);
-                        }),
-                    BotonModel(
-                        titulo: ")",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += ")";
+                            numero+= "7";
                           });
                         }),
                     BotonModel(
-                        titulo: "C",
+                        titulo: "8",
                         metodo: () {
                           setState(() {
-                            resultadosTexto = "";
+                            numero+= "8";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: "9",
+                        metodo: () {
+                          setState(() {
+                            numero+= "9";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: "÷",
+                        metodo: () {
+                          setState(() {
+                            operacion = "/";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
                           });
                         }),
                     BotonModel(
                         titulo: "DEL",
                         metodo: () {
                           setState(() {
-                            final pos = resultadosTexto.length - 1;
-                            resultadosTexto = resultadosTexto.substring(0,pos);
+                            final pos = numero.length - 1;
+                            numero = numero.substring(0,pos);
                           });
                         }),
-                  ]),
-                  botonesEnFila([
                     BotonModel(
-                        titulo: "%",
+                        titulo: "C",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "%";
+                            operacion = "";
+                            numero = "";
+                            operacionCompleta = "";
                           });
-                        }),
-                    BotonModel(
-                        titulo: "x^2",
-                        metodo: () {
-                          print("x^2");
-                        }),
-                    BotonModel(
-                        titulo: "√x",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "√(";
-                          });
-                          print("√x");
-                        }),
-                    BotonModel(
-                        titulo: "÷",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "/";
-                          });
-                          print("÷");
-                        }),
-                  ]),
-                  botonesEnFila([
-                    BotonModel(
-                        titulo: "7",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "7";
-                          });
-                          print("7");
-                        }),
-                    BotonModel(
-                        titulo: "8",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "8";
-                          });
-                          print("8");
-                        }),
-                    BotonModel(
-                        titulo: "9",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "9";
-                          });
-                          print("9");
-                        }),
-                    BotonModel(
-                        titulo: "x",
-                        metodo: () {
-                          setState(() {
-                            resultadosTexto += "x";
-                          });
-                          print("X");
                         }),
                   ]),
                   botonesEnFila([
@@ -152,33 +140,58 @@ class _HomePageState extends State<HomePage> {
                         titulo: "4",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "4";
+                            numero+= "4";
                           });
-                          print("4");
                         }),
                     BotonModel(
                         titulo: "5",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "5";
+                            numero+= "5";
                           });
-                          print("5");
                         }),
                     BotonModel(
                         titulo: "6",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "6";
+                            numero+= "6";
                           });
-                          print("6");
                         }),
                     BotonModel(
-                        titulo: "-",
+                        titulo: "x",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "-";
+                            operacion = "x";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
                           });
-                          print("-");
+                        }),
+                    BotonModel(
+                        titulo: "(",
+                        metodo: () {
+                          setState(() {
+                            operacion = "(";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: ")",
+                        metodo: () {
+                          setState(() {
+                            operacion = ")";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
+                          });
                         }),
                   ]),
                   botonesEnFila([
@@ -186,68 +199,123 @@ class _HomePageState extends State<HomePage> {
                         titulo: "1",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "1";
+                            numero+= "1";
                           });
-                          print("1");
                         }),
                     BotonModel(
                         titulo: "2",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "2";
+                            numero+= "2";
                           });
-                          print("2");
                         }),
                     BotonModel(
                         titulo: "3",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "3";
+                            numero+= "3";
                           });
-                          print("3");
                         }),
                     BotonModel(
-                        titulo: "+",
+                        titulo: "-",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "+";
+                            operacion = "-";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
                           });
-                          print("+");
+                        }),
+                    BotonModel(
+                        titulo: "x^2",
+                        metodo: () {
+                          setState(() {
+                            operacion = "2^(";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
+                          });
+                        }),
+                    BotonModel(
+                        titulo: "√x",
+                        metodo: () {
+                          setState(() {
+                            operacion = "√(";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
+                          });
                         }),
                   ]),
                   botonesEnFila([
                     BotonModel(
-                        titulo: "+/-",
-                        metodo: () {
-                          print("+/-");
-                        }),
-                    BotonModel(
                         titulo: "0",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += "0";
+                            numero+= "0";
                           });
-                          print("0");
+                        }),
+                    BotonModel(
+                        titulo: "%",
+                        metodo: () {
+                          setState(() {
+                            if(numero!=""){
+                              double porcentaje = double.parse(numero)/100;
+                              numero = porcentaje.toString();
+                              operacionCompleta += numero;
+                              numero="";
+                            }
+                          });
                         }),
                     BotonModel(
                         titulo: ",",
                         metodo: () {
                           setState(() {
-                            resultadosTexto += ",";
+                            operacion = ",";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
                           });
-                          print(",");
+                        }),
+                    BotonModel(
+                        titulo: "+",
+                        metodo: () {
+                          setState(() {
+                            operacion = "+";
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            operacionCompleta += operacion;
+                            numero = "";
+                          });
                         }),
                     BotonModel(
                         titulo: "=",
                         metodo: () {
                           setState(() {
-                            String resultado = resultadosTexto.replaceAll("x", "*").replaceAll("√", "sqrt");
+                            if(numero!=""){
+                              operacionCompleta += numero;
+                            }
+                            String resultado = operacionCompleta.replaceAll("x", "*").replaceAll("√", "sqrt");
                             Parser p = Parser();
                             Expression exp = p.parse(resultado);
                             ContextModel cm = ContextModel();
                             double eval = exp.evaluate(EvaluationType.REAL, cm);
                             resultado = eval.toString();
-                            captura.add(resultado);
+                            operacionCompleta += "=" + resultado;
+                            captura.add(operacionCompleta);
+                            capturareverse = captura.reversed.toList();
+                            operacionCompleta="";
+                            numero = "";
+                            operacion = "";
                           });
                         }),
                   ]),
