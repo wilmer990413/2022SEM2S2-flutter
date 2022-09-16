@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                       Column(
                         children: [
                           Container(
-                              padding: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(1),
                               alignment: Alignment.center,
                               child: Text(
                                 operacionCompleta,
@@ -114,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "7";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -121,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "8";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -128,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "9";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -157,6 +159,7 @@ class _HomePageState extends State<HomePage> {
                             operacion = "";
                             numero = "";
                             operacionCompleta = "";
+                            error = "";
                           });
                         }),
                   ]),
@@ -166,6 +169,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "4";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -173,6 +177,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "5";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -180,6 +185,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "6";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -225,6 +231,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "1";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -232,6 +239,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "2";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -239,6 +247,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "3";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -257,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                         titulo: "x^2",
                         metodo: () {
                           setState(() {
-                            operacion = "2^(";
+                            operacion = "(2)^(";
                             if (numero != "") {
                               operacionCompleta += numero;
                             }
@@ -284,6 +293,7 @@ class _HomePageState extends State<HomePage> {
                         metodo: () {
                           setState(() {
                             numero += "0";
+                            error = "";
                           });
                         }),
                     BotonModel(
@@ -332,17 +342,30 @@ class _HomePageState extends State<HomePage> {
                             String resultado = operacionCompleta
                                 .replaceAll("x", "*")
                                 .replaceAll("√", "sqrt");
-                            Parser p = Parser();
-                            Expression exp = p.parse(resultado);
-                            ContextModel cm = ContextModel();
-                            double eval = exp.evaluate(EvaluationType.REAL, cm);
-                            resultado = eval.toString();
-                            operacionCompleta += "=" + resultado;
-                            captura.add(operacionCompleta);
-                            capturareverse = captura.reversed.toList();
-                            operacionCompleta = "";
-                            numero = "";
-                            operacion = "";
+                            try {
+                              Parser p = Parser();
+                              Expression exp = p.parse(resultado);
+                              ContextModel cm = ContextModel();
+                              double eval =
+                                  exp.evaluate(EvaluationType.REAL, cm);
+                              resultado = eval.toString();
+                              operacionCompleta += "= $resultado";
+                              captura.add(operacionCompleta);
+                              capturareverse = captura.reversed.toList();
+                              operacionCompleta = "";
+                              numero = "";
+                              operacion = "";
+                            } on RangeError {
+                              error = "Expresion Matematica Erronea";
+                              operacionCompleta = "";
+                              numero = "";
+                              operacion = "";
+                            } on FormatException {
+                              error = "Expresion Matematica Erronea";
+                              operacionCompleta = "";
+                              numero = "";
+                              operacion = "";
+                            }
                           });
                         }),
                   ]),
