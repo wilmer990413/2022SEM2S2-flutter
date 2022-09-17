@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calculadora"),
+        title: const Text("Calculadora"),
       ),
       body: Column(
         children: [
@@ -383,6 +383,7 @@ class _HomePageState extends State<HomePage> {
                               capturareverse = captura.reversed.toList();
                               numero = "";
                               operacion = "";
+                              operacionCompleta = resultado;
                             } on RangeError catch (e) {
                               error = "Expresion Matematica Erronea";
                               operacionCompleta = "";
