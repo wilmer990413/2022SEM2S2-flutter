@@ -383,7 +383,8 @@ class _HomePageState extends State<HomePage> {
                               capturareverse = captura.reversed.toList();
                               numero = "";
                               operacion = "";
-                              operacionCompleta = resultado;
+                              operacionCompleta =
+                                  resultado.replaceAll(".", ",");
                             } on RangeError catch (e) {
                               error = "Expresion Matematica Erronea";
                               operacionCompleta = "";
